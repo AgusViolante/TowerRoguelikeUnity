@@ -1,0 +1,30 @@
+# Carpetas generadas por Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+
+# Editores
+.vs/
+.vscode/
+.idea/
+
+# Archivos de proyecto generados
+*.csproj
+*.sln
+*.suo
+*.user
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
