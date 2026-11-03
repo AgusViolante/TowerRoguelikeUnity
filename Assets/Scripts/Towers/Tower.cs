@@ -3,33 +3,47 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     [SerializeField] Transform turretHead;
+    [SerializeField] Transform firePoint;
+    [SerializeField] Projectile projectilePrefab;
     [SerializeField] float range = 6f;
+    [SerializeField] float fireRate = 1f;
+    [SerializeField] float damage = 10f;
 
     Enemy target;
+    float cooldown;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        cooldown = Mathf.Max(0f, cooldown - Time.deltaTime);
+
         target = FindTarget();
-        if (Enemy.Active.Count > 0)
-        {
-            float d = Vector3.Distance(Enemy.Active[0].transform.position, transform.position);
-            Debug.Log("Distancia: " + d + " | rango: " + range + " | objetivo: " + (target != null));
-        }
 
         if (target == null) return;
 
+        Aim();
+
+        if (cooldown <= 0f)
+        {
+            Shoot();
+            cooldown = 1f / fireRate;
+        }
+    }
+
+    void Aim()
+    {
         Vector3 direction = target.transform.position - turretHead.position;
         direction.y = 0f;
 
-        if ( direction.sqrMagnitude > 0.001f)
+        if (direction.sqrMagnitude > 0.001f)
             turretHead.rotation = Quaternion.LookRotation(direction);
+    }
+
+    void Shoot()
+    {
+        Projectile projectile = Instantiate(
+            projectilePrefab, firePoint.position, firePoint.rotation);
+
+        projectile.init(target, damage);
     }
 
     Enemy FindTarget()
@@ -54,10 +68,9 @@ public class Tower : MonoBehaviour
         return best;
     }
 
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, range);
     }
-
 }
