@@ -9,6 +9,8 @@ public class Tower : MonoBehaviour
     [SerializeField] float fireRate = 1f;
     [SerializeField] float damage = 10f;
 
+    [SerializeField] AudioClip shootSound;
+
     Enemy target;
     float cooldown;
 
@@ -42,6 +44,7 @@ public class Tower : MonoBehaviour
     {
         Projectile projectile = Instantiate(
             projectilePrefab, firePoint.position, firePoint.rotation);
+        Audio.PlaySfx(shootSound, 0.5f);
 
         projectile.init(target, damage);
     }

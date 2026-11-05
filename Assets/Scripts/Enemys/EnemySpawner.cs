@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemyCount; i++)
         {
             Enemy newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-            newEnemy.init(path);
+            newEnemy.Init(path);
             yield return new WaitForSeconds(interval);
         }
     }
